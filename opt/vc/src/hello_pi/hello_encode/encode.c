@@ -144,6 +144,7 @@ video_encode_test(char *outputfilename)
    print_def(def);
 
    // Port 200: in 1/1 115200 16 enabled,not pop.,not cont. 320x240 320x240 @1966080 20
+   //告诉编码器每帧中数据的存放（即generate_test_card中创建的每帧数据中数组的大小）
    def.format.video.nFrameWidth = WIDTH;
    def.format.video.nFrameHeight = HEIGHT;
    def.format.video.xFramerate = 30 << 16;
@@ -214,6 +215,7 @@ video_encode_test(char *outputfilename)
       }
       else {
 	 /* fill it */
+	 //这里nFilledLen确定每帧的大小，也就是确定每帧间的分界线。
 	 generate_test_card(buf->pBuffer, &buf->nFilledLen, framenumber++);
 
 	 if (OMX_EmptyThisBuffer(ILC_GET_HANDLE(video_encode), buf) !=
